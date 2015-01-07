@@ -33,4 +33,4 @@ Makefile*
 
 # XCode
 .DS_Store
-/*.xcodeproj
+*.xcodeproj
