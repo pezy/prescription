@@ -1,13 +1,18 @@
+#-------------------------------------------------
+#
+# Project created by QtCreator 2015-01-15T20:28:27
+#
+#-------------------------------------------------
+
+QT       += core gui
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+TARGET = e-Prescription
 TEMPLATE = app
 
-QT += qml quick widgets
 
-SOURCES += main.cpp
+SOURCES += main.cpp\
+        mainwindow.cpp
 
-RESOURCES += qml.qrc
-
-# Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH =
-
-# Default rules for deployment.
-include(deployment.pri)
+HEADERS  += mainwindow.h
