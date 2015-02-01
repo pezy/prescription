@@ -1,4 +1,4 @@
 prescription
 ============
 
-a simple prescription software for local hosiptal
+A simple prescription software for local hosiptal (Qt)
