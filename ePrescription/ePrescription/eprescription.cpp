@@ -6,6 +6,8 @@
 #include <QTextTable>
 #include <QTextFrameFormat>
 #include <QTextTableFormat>
+#include <QPrinter>
+#include <QPrintDialog>
 
 ePrescription::ePrescription(QWidget *parent)
 	: QMainWindow(parent)
@@ -16,19 +18,21 @@ ePrescription::ePrescription(QWidget *parent)
 	InitData();
 
 	setWindowTitle(QStringLiteral("电子处方 V0.01"));
+
+	connect(ui.m_actionPrint, SIGNAL(triggered()), this, SLOT(PrintFile()));
 }
 
 void ePrescription::Init()
 {
-	m_tabPrescription = new QTabWidget;
-	setCentralWidget(m_tabPrescription);
+	m_pTabPrescription = new QTabWidget;
+	setCentralWidget(m_pTabPrescription);
 }
 
 void ePrescription::InitData()
 {
 	QTextEdit *pTextEdit = new QTextEdit;
-	int tabIndex = m_tabPrescription->addTab(pTextEdit, QStringLiteral("丰台医院"));
-	m_tabPrescription->setCurrentIndex(tabIndex);
+	int tabIndex = m_pTabPrescription->addTab(pTextEdit, QStringLiteral("丰台医院"));
+	m_pTabPrescription->setCurrentIndex(tabIndex);
 
 	QTextCursor cursor(pTextEdit->textCursor());
 	cursor.movePosition(QTextCursor::Start);
@@ -111,4 +115,18 @@ void ePrescription::InitData()
 	cursor.insertText(QStringLiteral("药品金额: 151.12\t审核/调配签名(签章):\t核对/发药签名(签章):"));
 	cursor.insertBlock();
 	cursor.insertText(QStringLiteral("药师提示: 1、请遵守医嘱服药；2、请在窗口点清药品；3、处方当日有效；4、发出药品不予退换"));
+}
+
+void ePrescription::PrintFile()
+{
+	QTextEdit *pEditor = static_cast<QTextEdit*>(m_pTabPrescription->currentWidget());
+	QPrinter printer;
+	QPrintDialog dialog(&printer, this);
+	dialog.setWindowTitle(QStringLiteral("打印处方"));
+	if (pEditor->textCursor().hasSelection())
+		dialog.addEnabledOption(QAbstractPrintDialog::PrintSelection);
+	if (dialog.exec() != QDialog::Accepted)
+		return;
+
+	pEditor->print(&printer);
 }

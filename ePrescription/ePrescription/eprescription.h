@@ -17,9 +17,12 @@ public:
 	void Init();
 	void InitData();
 
+public slots:
+	void PrintFile();
+
 private:
 	Ui::ePrescriptionClass ui;
-	QTabWidget *m_tabPrescription;
+	QTabWidget *m_pTabPrescription;
 };
 
 #endif // EPRESCRIPTION_H
